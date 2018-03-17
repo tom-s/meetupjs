@@ -11,17 +11,29 @@ class App extends Component {
   }
   render = () => {
     return (
-      <a-scene artoolkit>
-        <a-anchor hit-testing-enabled='true'>
-          <a-marker-camera preset='hiro'>
-            <a-box position='0 0.5 0' material='opacity: 0.5; side:double; color:red;'>
-              <a-torus-knot radius='0.26' radius-tubular='0.05'>
-                <a-animation attribute="rotation" to="360 0 0" dur="5000" easing='linear' repeat="indefinite"></a-animation>
-              </a-torus-knot>
-            </a-box>
-          </a-marker-camera>
-        </a-anchor>
-      </a-scene>
+      <a-scene embedded arjs='trackingMethod: best;debugUIEnabled: false;'>
+      {/*
+      <a-assets>
+        <a-asset-item id="rocket-model" src="./assets/models/rocket/scene.gltf"></a-asset-item>
+       <!-- <video id="moon-video" autoplay loop="true" src="./assets/videos/moon.mp4"></video> -->
+      </a-assets> */}
+
+      <a-marker>
+        <a-entity scale="0.03 0.03 0.03">
+          <a-cylinder  height = "6" radius = "0.9" position="-1 0 0" booster-on></a-cylinder>
+          <a-cylinder  height = "6" radius = "0.9" position = "1 0 0" booster-on></a-cylinder>
+          <a-entity arrow  position = "0.1 0 0" length = "0" acceleration-vector></a-entity>
+          <a-entity arrow  position = "-0.1 0 0" length = "0" speed-vector></a-entity>
+        </a-entity>
+
+        {/*
+        <a-entity look-at="[camera]" position="-0.5 0.5 0">
+          <a-text color="#FFFFFF" width="2.8" altitude-counter></a-text>
+          <a-text color="#ff9900" width="2.8" lineHeight="0.03" position="-0.5 0.5 0" text-details></a-text>
+        </a-entity>*/}
+      </a-marker>
+      <a-camera-static />
+    </a-scene>
     )
   }
 
