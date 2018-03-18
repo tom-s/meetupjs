@@ -8,7 +8,7 @@ const Loader = ({ isLoading }) => isLoading &&
       <div className='Loader_bottom'></div>
       <div className='Loader_line'></div>
     </div>
-    <div className='Loader_text'>Chargement de votre expérience en cours... </div>
+    <div className='Loader_text'>Chargement de votre expérience MeetupJS en cours... </div>
   </div>
 
 export default Loader

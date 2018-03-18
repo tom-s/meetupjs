@@ -42,7 +42,7 @@ class App extends Component {
     const Step = get(STEPS, [step, 'component'])
     
     return [
-        <Loader isLoading={isLoading} />,
+        <Loader key='loader' isLoading={isLoading} />,
         <button key='button' onClick={this.onClick} className='Step_button'> Next </button>,
         <Scene key='scene' embedded arjs='trackingMethod: best;debugUIEnabled: false;' stats={false}>
           {/* Load all assets */}
