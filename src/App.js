@@ -1,72 +1,64 @@
 import React, { Component } from 'react'
-import { Entity, Scene } from 'aframe-react'
 import get from 'lodash.get'
 import './App.css'
 
-import Loader from './loader'
+import hocLoader from './loader'
+import ArScene from './steps/ar'
+
 // Steps
-import HawkinsVideo from './steps/hawkin'
-import Cube from './steps/cube'
+import HawkinsVideo from './steps/ar/hawkin'
+import Cube from './steps/ar/cube'
+import FaceTracking from './steps/faceTracking'
 
 const getNextStep = step => {
   switch(step) {
     case 'dawkins': return 'cube'
     case 'cube': return 'dawkins'
-    default: return 'dawkins'
+    default: return 'faceTracking'
   }
 }
 
 const STEPS = {
-  'dawkins': { component: HawkinsVideo },
-  'cube': { component: Cube } 
+  'dawkins': { component: HawkinsVideo, isAr: true },
+  'cube': { component: Cube, isAr: true },
+  'faceTracking': { component: FaceTracking, isAr: false } 
 }
+
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoading: true,
-      step: 'dawkins'
+      step: 'cube',
+      initialLoad: true
     }
   }
-  componentDidMount = () => {
-    window.document.querySelector('a-assets').addEventListener('loaded', () => {
-      console.log("assets loaded")
-      this.setState({
-       isLoading: false
-      })
-    });
-  }
   render = () => {
-    const { isLoading, step } = this.state
-    const Step = get(STEPS, [step, 'component'])
-    
-    return [
-        <Loader key='loader' isLoading={isLoading} />,
-        <button key='button' onClick={this.onClick} className='Step_button'> Next </button>,
-        <Scene key='scene' embedded arjs='trackingMethod: best;debugUIEnabled: false;' stats={false}>
-          {/* Load all assets */}
-          <Entity primitive='a-assets'>
-            {/* <Entity primitive='a-asset-item' id='heart' src={`${process.env.PUBLIC_URL}/models/heart/scene.gltf`}></Entity> */}
-            <video id="video-hawkins" autoPlay loop="true" src={`${process.env.PUBLIC_URL}/videos/hawkins.mp4`}></video>
-          </Entity>
-
-          <Entity primitive='a-marker'>
-            <Step />
-
-            {/*
-            <a-entity look-at="[camera]" position="-0.5 0.5 0">
-              <a-text color="#FFFFFF" width="2.8" altitude-counter></a-text>
-              <a-text color="#ff9900" width="2.8" lineHeight="0.03" position="-0.5 0.5 0" text-details></a-text>
-            </a-entity>*/}
-          </Entity>
-          <a-camera-static />
-        </Scene>
-    ]
+    const { step, initialLoad } = this.state
+    const isAr = get(STEPS, [step, 'isAr'])
+    const loadingDelay = initialLoad ? 5000 : 1000
+    const Step = isAr
+      ? hocLoader({ 
+          WrappedComponent: ArScene, 
+          promise: (resolve, reject) => {
+            window.document.querySelector('a-assets').addEventListener('loaded', () => resolve())
+          }, 
+          Step: get(STEPS, [step, 'component']),
+          onNext: this.onNext,
+          minDelay: loadingDelay
+      })
+      : hocLoader({ 
+          WrappedComponent: get(STEPS, [step, 'component']),
+          onNext: this.onNext,
+          minDelay: loadingDelay
+      })
+      
+    return  <Step />
   }
-  onClick = () => {
+  onNext = () => {
     const { step } = this.state
     this.setState({
+      initialLoad: false,
       step: getNextStep(step)
     })
   }
