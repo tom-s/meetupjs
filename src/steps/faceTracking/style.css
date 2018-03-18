@@ -1,0 +1,31 @@
+.FaceTracking {
+  position: absolute;
+  background-color: white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #DB7769;
+}
+
+.FaceTracking_wrapper {
+  margin: auto;
+  position: relative;
+  width: 320px;
+  height: 240px;
+}
+
+.FaceTracking_video {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.FaceTracking_canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

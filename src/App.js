@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import get from 'lodash.get'
 import './App.css'
-
-import hocLoader from './loader'
+import loadJS from 'load-js'
+import Loader from './loader'
 import ArScene from './steps/ar'
 
 // Steps
@@ -10,11 +10,25 @@ import HawkinsVideo from './steps/ar/hawkin'
 import Cube from './steps/ar/cube'
 import FaceTracking from './steps/faceTracking'
 
+const loadEssentialScripts = async() => {
+  const scripts = []
+  if(!window.AFRAME) scripts.push(`${process.env.PUBLIC_URL}/scripts/aframe.js`)
+  if(!window.tracking) {
+    scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/tracking-min.js`)
+    scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/data/face-min.js`)
+  }
+  await loadJS(scripts)
+  // needs to be loaded after
+  if(!window.AR) {
+    await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
+  }
+}
+
 const getNextStep = step => {
   switch(step) {
-    case 'dawkins': return 'cube'
     case 'cube': return 'dawkins'
-    default: return 'faceTracking'
+    case 'dawkins': return 'faceTracking'
+    default: return 'cube'
   }
 }
 
@@ -24,42 +38,36 @@ const STEPS = {
   'faceTracking': { component: FaceTracking, isAr: false } 
 }
 
-
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       step: 'cube',
-      initialLoad: true
+      scriptsReady: false,
     }
   }
+  componentDidMount = async() => {
+    await loadEssentialScripts()
+    this.setState({
+      scriptsReady: true
+    })
+  }
+
   render = () => {
-    const { step, initialLoad } = this.state
+    const { scriptsReady, step } = this.state
     const isAr = get(STEPS, [step, 'isAr'])
-    const loadingDelay = initialLoad ? 5000 : 1000
     const Step = isAr
-      ? hocLoader({ 
-          WrappedComponent: ArScene, 
-          promise: (resolve, reject) => {
-            window.document.querySelector('a-assets').addEventListener('loaded', () => resolve())
-          }, 
-          Step: get(STEPS, [step, 'component']),
-          onNext: this.onNext,
-          minDelay: loadingDelay
-      })
-      : hocLoader({ 
-          WrappedComponent: get(STEPS, [step, 'component']),
-          onNext: this.onNext,
-          minDelay: loadingDelay
-      })
-      
-    return  <Step />
+      ? ArScene
+      :  get(STEPS, [step, 'component'])
+    return scriptsReady
+      ? [<button key='button' onClick={this.onNext} className='Step_button'> Next </button>, <Step Step={get(STEPS, [step, 'component'])} />]
+      : <Loader />
   }
   onNext = () => {
     const { step } = this.state
+    const nextStep = getNextStep(step)
     this.setState({
-      initialLoad: false,
-      step: getNextStep(step)
+      step: nextStep
     })
   }
 
