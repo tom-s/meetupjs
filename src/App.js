@@ -12,6 +12,7 @@ const getNextStep = step => {
   switch(step) {
     case 'dawkins': return 'cube'
     case 'cube': return 'dawkins'
+    default: return 'dawkins'
   }
 }
 
@@ -32,7 +33,7 @@ class App extends Component {
     window.document.querySelector('a-assets').addEventListener('loaded', () => {
       console.log("assets loaded")
       this.setState({
-        isLoading: false
+       isLoading: false
       })
     });
   }
@@ -43,7 +44,7 @@ class App extends Component {
     return [
         <Loader isLoading={isLoading} />,
         <button key='button' onClick={this.onClick} className='Step_button'> Next </button>,
-        <Scene key='scene' embedded arjs='trackingMethod: best;debugUIEnabled: false;' stats>
+        <Scene key='scene' embedded arjs='trackingMethod: best;debugUIEnabled: false;' stats={false}>
           {/* Load all assets */}
           <Entity primitive='a-assets'>
             {/* <Entity primitive='a-asset-item' id='heart' src={`${process.env.PUBLIC_URL}/models/heart/scene.gltf`}></Entity> */}
