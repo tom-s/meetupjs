@@ -1,50 +1,50 @@
-import React, { Component } from 'react';
-import fill from 'lodash/fill';
-import { getDirectionalColor } from './colors';
-import './style.css';
+import React, { Component } from 'react'
+import fill from 'lodash/fill'
+import { getDirectionalColor } from './colors'
+import './style.css'
 
 class OpticalFlow extends Component {
   constructor(props) {
-    super(props);
-    this.flow = null;
-    this.canvas = null;
-    this.video = null;
+    super(props)
+    this.flow = null
+    this.canvas = null
+    this.video = null
   }
   componentWillUnmount = () => {
-    this.flow.stopCapture();
-  };
+    this.flow.stopCapture()
+  }
   componentDidMount = () => {
     window.navigator.mediaDevices
       .getUserMedia({ audio: false, video: true })
       .then(this.videoReady)
-      .catch(this.videoError);
-    this.flow = new window.oflow.WebCamFlow();
-    this.flow.onCalculated(this.onCapture);
+      .catch(this.videoError)
+    this.flow = new window.oflow.WebCamFlow()
+    this.flow.onCalculated(this.onCapture)
     // Starts capturing the flow from webcamera
-    this.flow.startCapture();
-  };
+    this.flow.startCapture()
+  }
 
   videoReady = stream => {
-    this.video.srcObject = stream;
-  };
+    this.video.srcObject = stream
+  }
 
   videoError = error => {
-    console.log('navigator.getUserMedia error: ', error);
-  };
+    console.log('navigator.getUserMedia error: ', error)
+  }
 
   onCapture = direction => {
     // render zones
-    const context = this.canvas.getContext('2d');
-    context.clearRect(0, 0, 640, 480);
-    context.lineWidth = 15;
+    const context = this.canvas.getContext('2d')
+    context.clearRect(0, 0, 640, 480)
+    context.lineWidth = 15
     direction.zones.forEach(zone => {
-      context.strokeStyle = getDirectionalColor(zone.u, zone.v);
-      context.beginPath();
-      context.moveTo(zone.x, zone.y);
-      context.lineTo(zone.x - zone.u, zone.y + zone.v);
-      context.stroke();
-    });
-  };
+      context.strokeStyle = getDirectionalColor(zone.u, zone.v)
+      context.beginPath()
+      context.moveTo(zone.x, zone.y)
+      context.lineTo(zone.x - zone.u, zone.y + zone.v)
+      context.stroke()
+    })
+  }
 
   render = () => (
     <div className="Oflow">
@@ -66,7 +66,7 @@ class OpticalFlow extends Component {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default OpticalFlow;
+export default OpticalFlow

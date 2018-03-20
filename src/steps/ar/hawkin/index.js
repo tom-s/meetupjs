@@ -6,10 +6,10 @@ class HawkinsVideo extends Component {
     const videoEl = window.document.querySelector('#video-hawkins')
     //videoEl.setAttribute('autoplay', true)
     // todo play/pause video on marker show/hide
-
   }
-  render = () => 
-    <Entity geometry="primitive: plane" material="src: #video-hawkins"></Entity>
+  render = () => (
+    <Entity geometry="primitive: plane" material="src: #video-hawkins" />
+  )
 }
 
 export default HawkinsVideo

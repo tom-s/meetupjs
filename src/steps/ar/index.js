@@ -20,15 +20,25 @@ class ArScene extends Component {
     const { assetsLoaded } = this.state
     const { Step } = this.props
     return (
-      <Scene embedded arjs='trackingMethod: best;debugUIEnabled: false;' stats={false}>
+      <Scene
+        embedded
+        arjs="trackingMethod: best;debugUIEnabled: false;"
+        stats={false}
+      >
         {/* Load all assets */}
         {!assetsLoaded && <Loader />}
-        <Entity primitive='a-assets'>
+        <Entity primitive="a-assets">
           {/* <Entity primitive='a-asset-item' id='heart' src={`${process.env.PUBLIC_URL}/models/heart/scene.gltf`}></Entity> */}
-          <video id="video-hawkins" muted={true} autoPlay={true} loop="true" src={`${process.env.PUBLIC_URL}/videos/hawkins.mp4`}></video>
+          <video
+            id="video-hawkins"
+            muted={true}
+            autoPlay={true}
+            loop="true"
+            src={`${process.env.PUBLIC_URL}/videos/hawkins.mp4`}
+          />
         </Entity>
 
-        <Entity primitive='a-marker'>
+        <Entity primitive="a-marker">
           <Step />
 
           {/*
@@ -37,7 +47,7 @@ class ArScene extends Component {
             <a-text color="#ff9900" width="2.8" lineHeight="0.03" position="-0.5 0.5 0" text-details></a-text>
           </a-entity>*/}
         </Entity>
-        <Entity primitive='a-camera-static' />
+        <Entity primitive="a-camera-static" />
       </Scene>
     )
   }
