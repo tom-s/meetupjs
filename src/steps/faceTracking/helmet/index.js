@@ -35,6 +35,7 @@ class FaceTracking extends Component {
       } else {
         this.missingFaceFrames++
       }
+      console.log('draw faces', event.data.length)
       event.data.forEach(rect => {
         this.drawFace(rect)
       })
