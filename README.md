@@ -3,6 +3,7 @@ Code for meetupJS
 ## TODO
 
 # Code
+
 * exemple OCR !
 * exemple tracking avec du feu en gif
 * ajouter compteur FPS
@@ -26,3 +27,4 @@ Code for meetupJS
 
 - et coté serveur ?
 - parler du futur (compilation en js avec ?)
+- parler ocr
