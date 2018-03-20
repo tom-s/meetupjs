@@ -3,8 +3,8 @@ Code for meetupJS
 ## TODO
 
 # Code
-
-* transformer troll detector en genius detector au click
+* exemple OCR !
+* exemple tracking avec du feu en gif
 * ajouter compteur FPS
 * add linting
 * complete readme
@@ -16,8 +16,13 @@ Code for meetupJS
 
 # Presentation
 
+* pourquoi en JS ?
 * parler featJS et tracking.js
 * parler du rendu: aframe, react-aframe, threeJS, babylon
 * mettre en lien les ressources que j'ai utilisé
 
 - parler des PRS utiles pas mergées (event on marker show/hide)
+- tracking: donner exemples filtres snpashat, facebook
+
+- et coté serveur ?
+- parler du futur (compilation en js avec ?)

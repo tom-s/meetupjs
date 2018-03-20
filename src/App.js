@@ -8,7 +8,8 @@ import ArScene from './steps/ar'
 // Steps
 import HawkinsVideo from './steps/ar/hawkin'
 import Cube from './steps/ar/cube'
-import FaceTracking from './steps/faceTracking'
+import faceTrackingTroll from './steps/faceTracking/troll'
+import faceTrackingHired from './steps/faceTracking/hired'
 import OpticalFlow from './steps/opticalFlow'
 
 const loadEssentialScripts = async () => {
@@ -35,9 +36,11 @@ const getNextStep = step => {
     case 'cube':
       return 'dawkins'
     case 'dawkins':
-      return 'faceTracking'
-    case 'faceTracking':
+      return 'faceTrackingTroll'
+    case 'faceTrackingTroll':
       return 'opticalFlow'
+    case 'opticalFlow':
+      return 'faceTrackingHired'
     default:
       return 'cube'
   }
@@ -54,9 +57,9 @@ const STEPS = {
     component: Cube,
     isAr: true
   },
-  faceTracking: {
+  faceTrackingTroll: {
     title: 'Détecteur de troll',
-    component: FaceTracking
+    component: faceTrackingTroll
   },
   opticalFlow: {
     title: 'Détecteur de vitesse',
@@ -68,7 +71,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'faceTracking',
+      step: 'faceTrackingTroll',
       scriptsReady: false
     }
   }
