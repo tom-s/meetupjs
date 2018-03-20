@@ -2,6 +2,8 @@ Code for meetupJS
 
 ## TODO
 # Code
+- transformer troll detector en genius detector au click
+- ajouter démo basique optical flow: https://github.com/anvaka/oflow/blob/master/demo/raw/index.html
 - add blur effect
 - add linting
 - add prettier
@@ -12,3 +14,5 @@ Code for meetupJS
 
 # Presentation
 - parler featJS et tracking.js
+- parler du rendu: aframe, react-aframe, threeJS, babylon
+- mettre en lien les ressources que j'ai utilisé

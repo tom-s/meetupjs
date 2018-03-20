@@ -38,10 +38,23 @@ const getNextStep = step => {
 }
 
 const STEPS = {
-  'dawkins': { component: HawkinsVideo, isAr: true },
-  'cube': { component: Cube, isAr: true },
-  'faceTracking': { component: FaceTracking },
-  'opticalFlow': { component: OpticalFlow } 
+  'dawkins': { 
+    title: '',
+    component: HawkinsVideo, 
+    isAr: true 
+  },
+  'cube': {
+    title: '', 
+    component: Cube, 
+    isAr: true 
+  },
+  'faceTracking': {
+    title: 'Détecteur de troll', 
+    component: FaceTracking 
+  },
+  'opticalFlow': { 
+    title: 'Détecteur de vitesse',
+    component: OpticalFlow } 
 }
 
 class App extends Component {
@@ -66,8 +79,10 @@ class App extends Component {
       ? ArScene
       :  get(STEPS, [step, 'component'])
     return scriptsReady
-      ? [<button key='button' onClick={this.onNext} className='Step_button'> Next </button>, <Step Step={get(STEPS, [step, 'component'])} />]
-      : <Loader />
+      ? [
+        <button key='button' onClick={this.onNext} className='Step_button'> Next </button>, 
+        <Step Step={get(STEPS, [step, 'component'])} />
+      ]: <Loader />
   }
   onNext = () => {
     const { step } = this.state
