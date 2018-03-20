@@ -68,7 +68,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'opticalFlow',
+      step: 'faceTracking',
       scriptsReady: false
     }
   }
@@ -89,7 +89,7 @@ class App extends Component {
           {' '}
           Next{' '}
         </button>,
-        <Step Step={get(STEPS, [step, 'component'])} />
+        <Step key="step" Step={get(STEPS, [step, 'component'])} />
       ]
     ) : (
       <Loader />

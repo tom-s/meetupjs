@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import fill from 'lodash/fill'
 import { getDirectionalColor } from './colors'
 import './style.css'
 
