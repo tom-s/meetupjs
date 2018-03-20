@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import get from "lodash.get";
-import "./App.css";
-import loadJS from "load-js";
-import Loader from "./loader";
-import ArScene from "./steps/ar";
+import React, { Component } from 'react';
+import get from 'lodash.get';
+import './App.css';
+import loadJS from 'load-js';
+import Loader from './loader';
+import ArScene from './steps/ar';
 
 // Steps
-import HawkinsVideo from "./steps/ar/hawkin";
-import Cube from "./steps/ar/cube";
-import FaceTracking from "./steps/faceTracking";
-import OpticalFlow from "./steps/opticalFlow";
+import HawkinsVideo from './steps/ar/hawkin';
+import Cube from './steps/ar/cube';
+import FaceTracking from './steps/faceTracking';
+import OpticalFlow from './steps/opticalFlow';
 
 const loadEssentialScripts = async () => {
   const scripts = [];
@@ -32,34 +32,34 @@ const loadEssentialScripts = async () => {
 
 const getNextStep = step => {
   switch (step) {
-    case "cube":
-      return "dawkins";
-    case "dawkins":
-      return "faceTracking";
-    case "faceTracking":
-      return "opticalFlow";
+    case 'cube':
+      return 'dawkins';
+    case 'dawkins':
+      return 'faceTracking';
+    case 'faceTracking':
+      return 'opticalFlow';
     default:
-      return "cube";
+      return 'cube';
   }
 };
 
 const STEPS = {
   dawkins: {
-    title: "",
+    title: 'No title',
     component: HawkinsVideo,
     isAr: true
   },
   cube: {
-    title: "",
+    title: 'No title',
     component: Cube,
     isAr: true
   },
   faceTracking: {
-    title: "Détecteur de troll",
+    title: 'Détecteur de troll',
     component: FaceTracking
   },
   opticalFlow: {
-    title: "Détecteur de vitesse",
+    title: 'Détecteur de vitesse',
     component: OpticalFlow
   }
 };
@@ -68,7 +68,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: "opticalFlow",
+      step: 'opticalFlow',
       scriptsReady: false
     };
   }
@@ -81,15 +81,15 @@ class App extends Component {
 
   render = () => {
     const { scriptsReady, step } = this.state;
-    const isAr = get(STEPS, [step, "isAr"]);
-    const Step = isAr ? ArScene : get(STEPS, [step, "component"]);
+    const isAr = get(STEPS, [step, 'isAr']);
+    const Step = isAr ? ArScene : get(STEPS, [step, 'component']);
     return scriptsReady ? (
       [
         <button key="button" onClick={this.onNext} className="Step_button">
-          {" "}
-          Next{" "}
+          {' '}
+          Next{' '}
         </button>,
-        <Step Step={get(STEPS, [step, "component"])} />
+        <Step Step={get(STEPS, [step, 'component'])} />
       ]
     ) : (
       <Loader />

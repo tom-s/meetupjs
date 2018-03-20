@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import fill from "lodash/fill";
-import { getDirectionalColor } from "./colors";
-import "./style.css";
+import React, { Component } from 'react';
+import fill from 'lodash/fill';
+import { getDirectionalColor } from './colors';
+import './style.css';
 
 class OpticalFlow extends Component {
   constructor(props) {
@@ -29,12 +29,12 @@ class OpticalFlow extends Component {
   };
 
   videoError = error => {
-    console.log("navigator.getUserMedia error: ", error);
+    console.log('navigator.getUserMedia error: ', error);
   };
 
   onCapture = direction => {
     // render zones
-    const context = this.canvas.getContext("2d");
+    const context = this.canvas.getContext('2d');
     context.clearRect(0, 0, 640, 480);
     context.lineWidth = 15;
     direction.zones.forEach(zone => {
