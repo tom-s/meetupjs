@@ -1,6 +1,5 @@
 .Oflow {
   position: absolute;
-  background-color: white;
   top: 0;
   left: 0;
   width: 100%;
@@ -8,20 +7,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  background-color: #db7769;
 }
 
 .Oflow_wrapper {
   margin: auto;
   position: relative;
-  width: 320px;
-  height: 240px;
+  width: 640px;
+  height: 480px;
+  transform: scale(0.5);
+  background-color: #000000;
 }
 
 .Oflow_video {
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0.3;
 }
 
 .Oflow_canvas {
