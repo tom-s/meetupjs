@@ -11,6 +11,7 @@ class FaceTracking extends Component {
     this.state = {
       currentImg: 0
     }
+    this.missingFaceFrames = 0
   }
 
   componentWillUnmount = () => {
@@ -26,10 +27,13 @@ class FaceTracking extends Component {
       camera: true
     })
     tracker.on('track', event => {
-      if (event.data.length) {
+      if (event.data.length || this.missingFaceFrames > 20) {
+        this.missingFaceFrames = 0
         this.canvas
           .getContext('2d')
           .clearRect(0, 0, this.canvas.width, this.canvas.height)
+      } else {
+        this.missingFaceFrames++
       }
       event.data.forEach(rect => {
         this.drawFace(rect)
