@@ -9,6 +9,7 @@ import ArScene from './steps/ar'
 import HawkinsVideo from './steps/ar/hawkin'
 import Cube from './steps/ar/cube'
 import FaceTracking from './steps/faceTracking'
+import OpticalFlow from './steps/opticalFlow'
 
 const loadEssentialScripts = async() => {
   const scripts = []
@@ -17,8 +18,12 @@ const loadEssentialScripts = async() => {
     scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/tracking-min.js`)
     scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/data/face-min.js`)
   }
+  if(!window.oflow) {
+    scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/polyfill.js`)
+    scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/flowZone.js`)
+  }
   await loadJS(scripts)
-  // needs to be loaded after
+  // aframe-ar requires to be loaded afterwards
   if(!window.AR) {
     await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
   }
@@ -35,14 +40,15 @@ const getNextStep = step => {
 const STEPS = {
   'dawkins': { component: HawkinsVideo, isAr: true },
   'cube': { component: Cube, isAr: true },
-  'faceTracking': { component: FaceTracking, isAr: false } 
+  'faceTracking': { component: FaceTracking },
+  'opticalFlow': { component: OpticalFlow } 
 }
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'cube',
+      step: 'opticalFlow',
       scriptsReady: false,
     }
   }
