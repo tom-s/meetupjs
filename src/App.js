@@ -39,9 +39,8 @@ const getNextStep = step => {
       return 'faceTracking'
     case 'faceTracking':
       return 'opticalFlow'
-    /*
     case 'opticalFlow':
-      return 'faceTrackingHired'*/
+      return 'faceTrackingHired'
     default:
       return 'cube'
   }
@@ -63,7 +62,7 @@ const STEPS = {
     component: faceTracking
   },
   opticalFlow: {
-    title: 'Détecteur de vitesse',
+    title: `Générateur d'étoiles`,
     component: OpticalFlow
   }
 }
@@ -72,7 +71,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'faceTracking',
+      step: 'opticalFlow',
       scriptsReady: false
     }
   }
