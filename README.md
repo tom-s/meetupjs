@@ -9,6 +9,7 @@ Code for meetupJS
 * améliorer expérience vidéos de l'espace
 * en mode cosmonaute ajouter un filtre de son
 * render l'animation astronaute plus smooth
+* faire description et l'envoyer à paul
 
 # Code
 

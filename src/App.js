@@ -11,7 +11,6 @@ import SpaceVideos from './steps/ar/space'
 import TakeOff from './steps/ar/takeoff'
 import Astronaut from './steps/faceTracking/helmet'
 import Stars from './steps/stars'
-//import faceTrackingHired from './steps/faceTracking/hired'
 
 const loadEssentialScripts = async () => {
   const scripts = []
@@ -33,43 +32,44 @@ const loadEssentialScripts = async () => {
   }
 }
 
-const getPreviousStep = step => {}
-
-const getNextStep = step => {
-  switch (step) {
-    case 'spaceVideos':
-      return 'astronaut'
-    case 'astronaut':
-      return 'takeOff'
-    case 'takeOff':
-      return 'inTheStars'
-    case 'inTheStars':
-      return 'spaceVideos'
-    default:
-      return 'spaceVideos'
-  }
+const getPreviousStep = step => {
+  const currentStepIndex = STEPS.findIndex(({ id }) => id === step)
+  const nextStepIndex =
+    currentStepIndex === 0 ? STEPS.length - 1 : currentStepIndex - 1
+  return STEPS[nextStepIndex].id
 }
 
-const STEPS = {
-  spaceVideos: {
+const getNextStep = step => {
+  const currentStepIndex = STEPS.findIndex(({ id }) => id === step)
+  const nextStepIndex =
+    currentStepIndex < STEPS.length - 1 ? currentStepIndex + 1 : 0
+  return STEPS[nextStepIndex].id
+}
+
+const STEPS = [
+  {
+    id: 'spaceVideos',
     title: `Des rêves d'espace`,
     component: SpaceVideos,
     isAr: true
   },
-  astronaut: {
-    title: 'Je suis un astronaute !',
+  {
+    id: 'astronaut',
+    title: 'Prêt pour le départ',
     component: Astronaut
   },
-  takeOff: {
+  {
+    id: 'takeOff',
     title: 'Décollage imminent',
     component: TakeOff,
     isAr: true
   },
-  inTheStars: {
-    title: `Dans les étoiles`,
+  {
+    id: 'inTheStars',
+    title: `La tête dans les étoiles`,
     component: Stars
   }
-}
+]
 
 class App extends Component {
   constructor(props) {
@@ -88,17 +88,18 @@ class App extends Component {
 
   render = () => {
     const { scriptsReady, step } = this.state
-    const isAr = get(STEPS, [step, 'isAr'])
-    const Step = isAr ? ArScene : get(STEPS, [step, 'component'])
+    const currentStep = STEPS.find(({ id }) => id === step)
+    const isAr = currentStep.isAr
+    const Step = isAr ? ArScene : currentStep.component
     return scriptsReady ? (
       [
         <Topbar
           onNext={this.onNext}
           onPrevious={this.onPrevious}
-          title={get(STEPS, [step, 'title'])}
+          title={currentStep.title}
           isAr={isAr}
         />,
-        <Step key="step" Step={get(STEPS, [step, 'component'])} />
+        <Step key="step" Step={currentStep.component} />
       ]
     ) : (
       <Loader />
