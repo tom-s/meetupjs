@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './style.css'
 
 const scale = 2
 const fStep = scale
@@ -7,12 +8,13 @@ class OpticalFlow extends Component {
   constructor(props) {
     super(props)
     this.flow = null
+    this.containerEl = null
+    this.imgEl = null
     this.canvasEl = null
     this.ocanvasEl = null
     this.tcanvasEl = null
     this.fcanvasEl = null
     this.videoEl = null
-    this.containerEl = null
 
     this.startTime = null
     this.balls = []
@@ -100,23 +102,24 @@ class OpticalFlow extends Component {
   videoReady = stream => {
     this.videoEl.srcObject = stream
     this.startTime = Date.now()
+    this.canvasEl = document.createElement('canvas')
+    this.canvasEl.style.display = 'none'
     this.tcanvasEl = document.createElement('canvas')
     this.ocanvasEl = document.createElement('canvas')
-    this.fcanvasEl = document.createElement('canvas')
-    this.canvasEl.width = 0
     this.flow = new window.oflow.FlowCalculator(fStep)
     this.extractDifferences()
   }
 
   videoError = error => {
-    console.log('navigator.getUserMedia error: ', error)
+    alert('navigator.getUserMedia non disponible, désolé !')
   }
 
   updateCanvas = (d, f) => {
-    const context = this.canvasEl.getContext('2d')
+    const gap = 10
+    const context = this.fcanvasEl.getContext('2d')
     var min = 2
     var maxLife = 100
-    for (let j = 0; j < d.zones.length; j++) {
+    for (let j = 0; j < d.zones.length; j = j + gap) {
       if (Math.abs(d.zones[j].u) > min || Math.abs(d.zones[j].v) > min) {
         this.balls.push({
           x: d.zones[j].x,
@@ -150,13 +153,15 @@ class OpticalFlow extends Component {
 
       context.globalAlpha = a
       context.beginPath()
+      context.drawImage(this.imgEl, b.x * scale, b.y * scale)
+      /*
       context.arc(
         b.x * scale,
         b.y * scale,
         0.05 * (maxLife - b.life),
         0,
         2 * Math.PI
-      )
+      )*/
       context.fill()
 
       b.ox = ox
@@ -171,13 +176,17 @@ class OpticalFlow extends Component {
         <video
           ref={el => (this.videoEl = el)}
           style={{ display: 'none' }}
-          className="Oflow_video"
           width="640px"
           height="480px"
           autoPlay
           muted
         />
-        <canvas ref={el => (this.canvasEl = el)} className="Oflow_canvas" />
+        <canvas ref={el => (this.fcanvasEl = el)} />
+        <div ref={el => (this.containerEl = el)} className="Container" />
+        <img
+          ref={el => (this.imgEl = el)}
+          src={`${process.env.PUBLIC_URL}/images/star_10x10.png`}
+        />
       </div>
     </div>
   )

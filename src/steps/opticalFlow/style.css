@@ -18,16 +18,3 @@
   transform: scale(0.5);
   background-color: #000000;
 }
-
-.Oflow_video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
-}
-
-.Oflow_canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
