@@ -2,13 +2,11 @@ Code for meetupJS
 
 ## TODO
 
-* ajouter un lien avec le hirocode
 * faire décollage
 * faire slides avec toutes les références (+ lien github)
 * vérifier que ca fonctionne sur mobile (et serrer les fesses)
 * améliorer expérience vidéos de l'espace
 * en mode cosmonaute ajouter un filtre de son
-* render l'animation astronaute plus smooth
 * faire description et l'envoyer à paul
 
 # Code

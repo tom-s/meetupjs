@@ -94,6 +94,7 @@ class App extends Component {
     return scriptsReady ? (
       [
         <Topbar
+          key="topbar"
           onNext={this.onNext}
           onPrevious={this.onPrevious}
           title={currentStep.title}
@@ -111,7 +112,6 @@ class App extends Component {
     }))
   }
   onNext = () => {
-    console.log('on next')
     this.setState(prevState => ({
       step: getNextStep(prevState.step)
     }))

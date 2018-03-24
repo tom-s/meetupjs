@@ -12,6 +12,8 @@ class FaceTracking extends Component {
       currentImg: 0
     }
     this.missingFaceFrames = 0
+    this.previousImageWidth = null
+    this.previousPosition = null
   }
 
   componentWillUnmount = () => {
@@ -35,20 +37,61 @@ class FaceTracking extends Component {
       } else {
         this.missingFaceFrames++
       }
+      if (event.data[0]) {
+        this.drawFace(event.data[0])
+      }
+      /*
       event.data.forEach(rect => {
         this.drawFace(rect)
-      })
+      })*/
     })
+  }
+
+  // smoothen image width
+  calculateImageWidth = imgWidth => {
+    const tolerance = 5
+    if (!this.previousImageWidth) return imgWidth
+    if (imgWidth - this.previousImageWidth > tolerance)
+      return this.previousImageWidth + tolerance
+    if (this.previousImageWidth - imgWidth > tolerance)
+      return this.previousImageWidth - tolerance
+    return imgWidth
+  }
+
+  // smoothen position
+  calculateCoordinate = (a, tolerance, axis) => {
+    if (!this.previousPosition) return a
+    if (a - this.previousPosition[axis] > tolerance)
+      return this.previousPosition[axis] + tolerance
+    if (this.previousPosition[axis] - a > tolerance)
+      return this.previousPosition[axis] - tolerance
+    return a
+  }
+
+  calculatePosition = (x, y) => {
+    const tolerance = 5
+    return {
+      x: this.calculateCoordinate(x, tolerance, 'x'),
+      y: this.calculateCoordinate(y, tolerance, 'y')
+    }
   }
 
   drawFace = rect => {
     const { currentImg } = this.state
     const img = this.images[currentImg]
     const biggerRatio = 0.7
-    const imgWidth = Math.max(rect.width, rect.height) * (1 + biggerRatio)
-    const x = rect.x - (imgWidth - Math.max(rect.width, rect.height)) / 2
-    const y = rect.y - (imgWidth - Math.max(rect.width, rect.height)) / 2
-    this.canvas.getContext('2d').drawImage(img, x, y, imgWidth, imgWidth)
+    const imgWidth = this.calculateImageWidth(
+      Math.max(rect.width, rect.height) * (1 + biggerRatio)
+    )
+    this.previousImageWidth = imgWidth
+    const position = this.calculatePosition(
+      rect.x - (imgWidth - Math.max(rect.width, rect.height)) / 2,
+      rect.y - (imgWidth - Math.max(rect.width, rect.height)) / 2
+    )
+    this.previousPosition = position
+    this.canvas
+      .getContext('2d')
+      .drawImage(img, position.x, position.y, imgWidth, imgWidth)
   }
 
   toggle = () => {
