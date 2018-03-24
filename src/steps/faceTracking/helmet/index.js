@@ -35,7 +35,6 @@ class FaceTracking extends Component {
       } else {
         this.missingFaceFrames++
       }
-      console.log('draw faces', event.data.length)
       event.data.forEach(rect => {
         this.drawFace(rect)
       })
@@ -45,10 +44,10 @@ class FaceTracking extends Component {
   drawFace = rect => {
     const { currentImg } = this.state
     const img = this.images[currentImg]
-    const biggerRatio = 0.5
+    const biggerRatio = 0.7
     const imgWidth = Math.max(rect.width, rect.height) * (1 + biggerRatio)
-    const x = rect.x - imgWidth * biggerRatio / 2
-    const y = rect.y - imgWidth * biggerRatio / 2
+    const x = rect.x - (imgWidth - Math.max(rect.width, rect.height)) / 2
+    const y = rect.y - (imgWidth - Math.max(rect.width, rect.height)) / 2
     this.canvas.getContext('2d').drawImage(img, x, y, imgWidth, imgWidth)
   }
 
@@ -63,47 +62,58 @@ class FaceTracking extends Component {
     this.images = uniq([...this.images, el])
   }
 
-  render = () => {
-    const { showTroll } = this.state
-    return (
-      <div className="FaceTracking">
-        <div className="FaceTracking_wrapper">
-          <video
-            width="320px"
-            height="240px"
-            className="FaceTracking_video"
-            id="video"
-            autoPlay
-            loop
-            muted
+  render = () => (
+    <div className="FaceTracking">
+      <div className="FaceTracking_wrapper">
+        <video
+          width="320px"
+          height="240px"
+          className="FaceTracking_video"
+          id="video"
+          autoPlay
+          loop
+          muted
+        />
+        <canvas
+          width="320px"
+          height="240px"
+          className="FaceTracking_canvas"
+          ref={el => (this.canvas = el)}
+        />
+        <button className="Helmet_button" onClick={this.toggle}>
+          Changer de style !
+        </button>
+        <div style={{ display: 'none' }}>
+          <img
+            alt="helmet 1"
+            ref={this.addToImages}
+            src={`${process.env.PUBLIC_URL}/images/helmets/1.png`}
           />
-          <canvas
-            width="320px"
-            height="240px"
-            className="FaceTracking_canvas"
-            ref={el => (this.canvas = el)}
+        </div>
+        <div style={{ display: 'none' }}>
+          <img
+            alt="helmet 2"
+            ref={this.addToImages}
+            src={`${process.env.PUBLIC_URL}/images/helmets/2.png`}
           />
-          <button className="Helmet_button" onClick={this.toggle}>
-            Changer de style !
-          </button>
-          <div style={{ display: 'none' }}>
-            <img
-              alt="helmet 1"
-              ref={this.addToImages}
-              src={`${process.env.PUBLIC_URL}/images/space_helmet.png`}
-            />
-          </div>
-          <div style={{ display: 'none' }}>
-            <img
-              alt="helmet 2"
-              ref={this.addToImages}
-              src={`${process.env.PUBLIC_URL}/images/space_helmet.png`}
-            />
-          </div>
+        </div>
+        <div style={{ display: 'none' }}>
+          <img
+            alt="helmet 3"
+            ref={this.addToImages}
+            src={`${process.env.PUBLIC_URL}/images/helmets/3.png`}
+          />
+        </div>
+        <div style={{ display: 'none' }}>
+          <img
+            alt="helmet 4"
+            ref={this.addToImages}
+            src={`${process.env.PUBLIC_URL}/images/helmets/4.png`}
+          />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default FaceTracking

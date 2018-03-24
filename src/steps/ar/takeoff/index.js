@@ -1,7 +1,7 @@
 import React from 'react'
 import { Entity } from 'aframe-react'
 
-const Cube = () => (
+const Takeoff = () => (
   <Entity
     primitive="a-box"
     position="0 0.5 0"
@@ -20,4 +20,4 @@ const Cube = () => (
   </Entity>
 )
 
-export default Cube
+export default Takeoff

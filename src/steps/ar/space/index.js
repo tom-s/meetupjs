@@ -1,16 +1,33 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Entity } from 'aframe-react'
 
-class SpaceVideos extends Component {
-  /*
-  componentDidMount = () => {
-    const videoEl = window.document.querySelector('#video-hawkins')
-    //videoEl.setAttribute('autoplay', true)
-    // todo play/pause video on marker show/hide
-  }*/
-  render = () => (
-    <Entity geometry="primitive: plane" material="src: #video-hawkins" />
-  )
-}
+const Space = () => (
+  <Entity>
+    <Entity
+      geometry="primitive: plane"
+      position="0 0 0"
+      rotation="-90 0 0"
+      material="src: #video-landing"
+    />
+    <Entity
+      geometry="primitive: plane"
+      position="0 0.5 -1"
+      rotation="-45 0 0"
+      material="src: #video-interstellar"
+    />
+    <Entity
+      geometry="primitive: plane"
+      position="-1 0 -1"
+      rotation="-45 45 0"
+      material="src: #video-spaceodyssey"
+    />
+    <Entity
+      geometry="primitive: plane"
+      position="1 0 -1"
+      rotation="0 -45 0"
+      material="src: #video-et"
+    />
+  </Entity>
+)
 
-export default SpaceVideos
+export default Space

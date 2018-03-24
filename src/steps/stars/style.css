@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #db7769;
+  background-color: #1b3b5b;
 }
 
 .Oflow_wrapper {
@@ -16,5 +16,5 @@
   width: 640px;
   height: 480px;
   transform: scale(0.5);
-  background-color: #000000;
+  background-color: #1b3b5b;
 }

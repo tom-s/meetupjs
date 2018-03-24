@@ -9,6 +9,7 @@ const fStep = scale
 class OpticalFlow extends Component {
   constructor(props) {
     super(props)
+    this.frameRequest = null
     this.flow = null
     this.containerEl = null
     this.imgEl = null
@@ -20,6 +21,10 @@ class OpticalFlow extends Component {
 
     this.startTime = null
     this.balls = []
+  }
+
+  componentWillUnmount = () => {
+    window.cancelAnimationFrame(this.frameRequest)
   }
 
   componentDidMount = () => {
@@ -75,7 +80,7 @@ class OpticalFlow extends Component {
         this.ocanvasEl.height
       )
     } catch (e) {
-      window.requestAnimationFrame(this.extractDifferences)
+      this.frameRequest = window.requestAnimationFrame(this.extractDifferences)
       return
     }
 
@@ -98,7 +103,7 @@ class OpticalFlow extends Component {
 
     oCtx.drawImage(this.tcanvasEl, 0, 0)
 
-    window.requestAnimationFrame(this.extractDifferences)
+    this.frameRequest = window.requestAnimationFrame(this.extractDifferences)
   }
 
   videoReady = stream => {
@@ -187,6 +192,7 @@ class OpticalFlow extends Component {
         <div ref={el => (this.containerEl = el)} className="Container" />
         <img
           ref={el => (this.imgEl = el)}
+          alt="star"
           style={{ display: 'none' }}
           src={`${process.env.PUBLIC_URL}/images/star_10x10.png`}
         />

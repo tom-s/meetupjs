@@ -4,6 +4,7 @@ import './App.css'
 import loadJS from 'load-js'
 import Loader from './loader'
 import ArScene from './steps/ar'
+import Topbar from './Topbar'
 
 // Steps
 import SpaceVideos from './steps/ar/space'
@@ -28,8 +29,11 @@ const loadEssentialScripts = async () => {
   // aframe-ar requires to be loaded afterwards
   if (!window.AR) {
     await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
+    await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar-lookat.js`])
   }
 }
+
+const getPreviousStep = step => {}
 
 const getNextStep = step => {
   switch (step) {
@@ -88,22 +92,28 @@ class App extends Component {
     const Step = isAr ? ArScene : get(STEPS, [step, 'component'])
     return scriptsReady ? (
       [
-        <button key="button" onClick={this.onNext} className="Step_button">
-          {' '}
-          Next{' '}
-        </button>,
+        <Topbar
+          onNext={this.onNext}
+          onPrevious={this.onPrevious}
+          title={get(STEPS, [step, 'title'])}
+          isAr={isAr}
+        />,
         <Step key="step" Step={get(STEPS, [step, 'component'])} />
       ]
     ) : (
       <Loader />
     )
   }
+  onPrevious = () => {
+    this.setState(prevState => ({
+      step: getPreviousStep(prevState.step)
+    }))
+  }
   onNext = () => {
-    const { step } = this.state
-    const nextStep = getNextStep(step)
-    this.setState({
-      step: nextStep
-    })
+    console.log('on next')
+    this.setState(prevState => ({
+      step: getNextStep(prevState.step)
+    }))
   }
 }
 

@@ -2,6 +2,14 @@ Code for meetupJS
 
 ## TODO
 
+* ajouter un lien avec le hirocode
+* faire décollage
+* faire slides avec toutes les références (+ lien github)
+* vérifier que ca fonctionne sur mobile (et serrer les fesses)
+* améliorer expérience vidéos de l'espace
+* en mode cosmonaute ajouter un filtre de son
+* render l'animation astronaute plus smooth
+
 # Code
 
 * exemple OCR !
@@ -19,12 +27,12 @@ Code for meetupJS
 
 * pourquoi en JS ?
 * parler featJS et tracking.js
-* parler du rendu: aframe, react-aframe, threeJS, babylon
+* parler du rendu: aframe, react-aframe, threeJS, babylon, webGL
 * mettre en lien les ressources que j'ai utilisé
 
 - parler des PRS utiles pas mergées (event on marker show/hide)
 - tracking: donner exemples filtres snpashat, facebook
 
 - et coté serveur ?
-- parler du futur (compilation en js avec ?)
+- parler du futur (compilation en js avec webAssembly)
 - parler ocr

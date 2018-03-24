@@ -28,7 +28,7 @@ class OpticalFlow extends Component {
   }
 
   videoError = error => {
-    console.log('navigator.getUserMedia error: ', error)
+    alert('navigator.getUserMedia error: ')
   }
 
   onCapture = direction => {

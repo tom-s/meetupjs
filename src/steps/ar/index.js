@@ -11,6 +11,7 @@ class ArScene extends Component {
   }
   componentDidMount = () => {
     window.document.querySelector('a-assets').addEventListener('loaded', () => {
+      console.log('assets loaded')
       this.setState({
         assetsLoaded: true
       })
@@ -30,22 +31,37 @@ class ArScene extends Component {
         <Entity primitive="a-assets">
           {/* <Entity primitive='a-asset-item' id='heart' src={`${process.env.PUBLIC_URL}/models/heart/scene.gltf`}></Entity> */}
           <video
-            id="video-hawkins"
+            id="video-et"
             muted={true}
             autoPlay={true}
             loop="true"
-            src={`${process.env.PUBLIC_URL}/videos/hawkins.mp4`}
+            src={`${process.env.PUBLIC_URL}/videos/et.mp4`}
+          />
+          <video
+            id="video-interstellar"
+            muted={true}
+            autoPlay={true}
+            loop="true"
+            src={`${process.env.PUBLIC_URL}/videos/interstellar.mp4`}
+          />
+          <video
+            id="video-landing"
+            muted={true}
+            autoPlay={true}
+            loop="true"
+            src={`${process.env.PUBLIC_URL}/videos/landing.mp4`}
+          />
+          <video
+            id="video-spaceodyssey"
+            muted={true}
+            autoPlay={true}
+            loop="true"
+            src={`${process.env.PUBLIC_URL}/videos/spaceodyssey.mp4`}
           />
         </Entity>
 
         <Entity primitive="a-marker">
           <Step />
-
-          {/*
-          <a-entity look-at="[camera]" position="-0.5 0.5 0">
-            <a-text color="#FFFFFF" width="2.8" altitude-counter></a-text>
-            <a-text color="#ff9900" width="2.8" lineHeight="0.03" position="-0.5 0.5 0" text-details></a-text>
-          </a-entity>*/}
         </Entity>
         <Entity primitive="a-camera-static" />
       </Scene>
