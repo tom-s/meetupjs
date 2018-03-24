@@ -6,11 +6,11 @@ import Loader from './loader'
 import ArScene from './steps/ar'
 
 // Steps
-import HawkinsVideo from './steps/ar/hawkin'
-import Cube from './steps/ar/cube'
-import faceTracking from './steps/faceTracking/helmet'
+import SpaceVideos from './steps/ar/space'
+import TakeOff from './steps/ar/takeoff'
+import Astronaut from './steps/faceTracking/helmet'
+import Stars from './steps/stars'
 //import faceTrackingHired from './steps/faceTracking/hired'
-import OpticalFlow from './steps/opticalFlow'
 
 const loadEssentialScripts = async () => {
   const scripts = []
@@ -33,37 +33,37 @@ const loadEssentialScripts = async () => {
 
 const getNextStep = step => {
   switch (step) {
-    case 'cube':
-      return 'helmet'
-    case 'helmet':
-      return 'faceTracking'
-    case 'faceTracking':
-      return 'opticalFlow'
-    case 'opticalFlow':
-      return 'faceTrackingHired'
+    case 'spaceVideos':
+      return 'astronaut'
+    case 'astronaut':
+      return 'takeOff'
+    case 'takeOff':
+      return 'inTheStars'
+    case 'inTheStars':
+      return 'spaceVideos'
     default:
-      return 'cube'
+      return 'spaceVideos'
   }
 }
 
 const STEPS = {
-  helmet: {
-    title: 'No title',
-    component: HawkinsVideo,
+  spaceVideos: {
+    title: `Des rêves d'espace`,
+    component: SpaceVideos,
     isAr: true
   },
-  cube: {
-    title: 'No title',
-    component: Cube,
+  astronaut: {
+    title: 'Je suis un astronaute !',
+    component: Astronaut
+  },
+  takeOff: {
+    title: 'Décollage imminent',
+    component: TakeOff,
     isAr: true
   },
-  faceTracking: {
-    title: 'Détecteur de troll',
-    component: faceTracking
-  },
-  opticalFlow: {
-    title: `Générateur d'étoiles`,
-    component: OpticalFlow
+  inTheStars: {
+    title: `Dans les étoiles`,
+    component: Stars
   }
 }
 
@@ -71,7 +71,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'opticalFlow',
+      step: 'spaceVideos',
       scriptsReady: false
     }
   }

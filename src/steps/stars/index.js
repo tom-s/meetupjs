@@ -1,3 +1,5 @@
+/* Code inspired from https://www.clicktorelease.com/code/optical-flow-webrtc/ */
+
 import React, { Component } from 'react'
 import './style.css'
 
@@ -185,6 +187,7 @@ class OpticalFlow extends Component {
         <div ref={el => (this.containerEl = el)} className="Container" />
         <img
           ref={el => (this.imgEl = el)}
+          style={{ display: 'none' }}
           src={`${process.env.PUBLIC_URL}/images/star_10x10.png`}
         />
       </div>

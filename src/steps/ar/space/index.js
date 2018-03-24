@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Entity } from 'aframe-react'
 
-class HawkinsVideo extends Component {
+class SpaceVideos extends Component {
   /*
   componentDidMount = () => {
     const videoEl = window.document.querySelector('#video-hawkins')
@@ -13,4 +13,4 @@ class HawkinsVideo extends Component {
   )
 }
 
-export default HawkinsVideo
+export default SpaceVideos
